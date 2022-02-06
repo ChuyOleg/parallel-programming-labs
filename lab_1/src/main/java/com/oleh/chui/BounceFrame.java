@@ -21,27 +21,14 @@ public class BounceFrame extends JFrame {
         buttonPanel.setBackground(Color.lightGray);
         JButton buttonAddBlueBall = new JButton("Add blue ball");
         JButton buttonAddRedBall = new JButton("Add red ball");
+        JButton buttonAddGreenBall = new JButton("Add green ball");
         JButton buttonStop = new JButton("Stop");
 
-        buttonAddBlueBall.addActionListener(e -> {
+        buttonAddBlueBall.addActionListener(e -> createBallAndSetPriorityAndStartThread(BallColor.BLUE));
 
-            Ball b = new Ball(canvas, BounceFrame.this, BallColor.BLUE);
-            canvas.add(b);
+        buttonAddRedBall.addActionListener(e -> createBallAndSetPriorityAndStartThread(BallColor.RED));
 
-            BallThread thread = new BallThread(b);
-            thread.setPriority(b.getBallColor().getPriorityValue());
-            thread.start();
-        });
-
-        buttonAddRedBall.addActionListener(e -> {
-
-            Ball b = new Ball(canvas, BounceFrame.this, BallColor.RED);
-            canvas.add(b);
-
-            BallThread thread = new BallThread(b);
-            thread.setPriority(b.getBallColor().getPriorityValue());
-            thread.start();
-        });
+        buttonAddGreenBall.addActionListener(e -> createBallAndSetPriorityAndStartThread(BallColor.GREEN));
 
         buttonStop.addActionListener(e -> System.exit(0));
 
@@ -49,19 +36,16 @@ public class BounceFrame extends JFrame {
 
         buttonPanel.add(buttonAddBlueBall);
         buttonPanel.add(buttonAddRedBall);
+        buttonPanel.add(buttonAddGreenBall);
         buttonPanel.add(buttonStop);
         buttonPanel.add(goalsNumberComponent);
 
         JPanel experimentsPanel = new JPanel();
         experimentsPanel.setBackground(Color.YELLOW);
-        JButton buttonExperiment1 = createButtonExperiment1("Experiment 1", 1, 10);
-        JButton buttonExperiment2 = createButtonExperiment1("Experiment 2", 1, 100);
-        JButton buttonExperiment3 = createButtonExperiment1("Experiment 3", 1, 1000);
-        JButton buttonExperiment4 = createButtonExperiment1("Experiment 4", 1, 2000);
-        experimentsPanel.add(buttonExperiment1);
-        experimentsPanel.add(buttonExperiment2);
-        experimentsPanel.add(buttonExperiment3);
-        experimentsPanel.add(buttonExperiment4);
+        createButtonExperimentAndAddToPanel("Experiment 1", 1, 10, experimentsPanel);
+        createButtonExperimentAndAddToPanel("Experiment 2", 1, 100, experimentsPanel);
+        createButtonExperimentAndAddToPanel("Experiment 3", 1, 1000, experimentsPanel);
+        createButtonExperimentAndAddToPanel("Experiment 4", 1, 2000, experimentsPanel);
 
         content.add(buttonPanel, BorderLayout.NORTH);
         content.add(experimentsPanel, BorderLayout.SOUTH);
@@ -72,30 +56,31 @@ public class BounceFrame extends JFrame {
         goalsNumberComponent.setText("Score: " + canvas.getBallCountInPockets());
     }
 
-    public JButton createButtonExperiment1(String name, int redBallsCount, int blueBallsCount) {
+    public void createButtonExperimentAndAddToPanel(String name, int redBallsCount, int blueBallsCount, JPanel panel) {
         JButton buttonExperiment = new JButton(name);
         buttonExperiment.addActionListener(e -> {
 
             for (int index = 0; index < redBallsCount; index++) {
-                Ball b = new Ball(canvas, BounceFrame.this, BallColor.RED);
-                canvas.add(b);
-                BallThread thread = new BallThread(b);
-                thread.setPriority(b.getBallColor().getPriorityValue());
-                thread.start();
-                b.setCoordinates(50, 50);
+                Ball ball = createBallAndSetPriorityAndStartThread(BallColor.RED);
+                ball.setCoordinates(Config.EXPERIMENT_COORDINATES.getKey(), Config.EXPERIMENT_COORDINATES.getValue());
             }
 
             for (int index = 0; index < blueBallsCount; index++) {
-                Ball b = new Ball(canvas, BounceFrame.this, BallColor.BLUE);
-                canvas.add(b);
-                BallThread thread = new BallThread(b);
-                thread.setPriority(b.getBallColor().getPriorityValue());
-                thread.start();
-                b.setCoordinates(50, 50);
+                Ball ball = createBallAndSetPriorityAndStartThread(BallColor.BLUE);
+                ball.setCoordinates(Config.EXPERIMENT_COORDINATES.getKey(), Config.EXPERIMENT_COORDINATES.getValue());
             }
 
         });
-        return buttonExperiment;
+        panel.add(buttonExperiment);
+    }
+
+    private Ball createBallAndSetPriorityAndStartThread(BallColor ballColor) {
+        Ball ball = new Ball(canvas, BounceFrame.this, ballColor);
+        BallThread thread = new BallThread(ball, canvas.getThreads());
+        thread.setPriority(ball.getBallColor().getPriorityValue());
+        canvas.addBall(ball, thread);
+        thread.start();
+        return ball;
     }
 
 }

@@ -33,6 +33,7 @@ public class Ball {
     public void draw (Graphics2D g2) {
         if (ballColor.equals(BallColor.BLUE)) g2.setColor(Color.BLUE);
         else if (ballColor.equals(BallColor.RED)) g2.setColor(Color.RED);
+        else if (ballColor.equals(BallColor.GREEN)) g2.setColor(Color.GREEN);
         g2.fill(new Ellipse2D.Double(x,y,XSIZE,YSIZE));
     }
 

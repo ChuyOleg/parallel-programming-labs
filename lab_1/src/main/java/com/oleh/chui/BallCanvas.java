@@ -13,14 +13,17 @@ public class BallCanvas extends JPanel {
 
     private final List<Pair<Integer, Integer>> pocketsCoordinates = Config.POCKETS_COORDINATES;
     private final Queue<Ball> balls = new ConcurrentLinkedDeque<>();
+    private final Queue<BallThread> threads = new ConcurrentLinkedDeque<>();
     private int ballCountInPockets = 0;
 
-    public void add(Ball b){
+    public void addBall(Ball b, BallThread thread){
         this.balls.add(b);
+        this.threads.add(thread);
     }
 
-    public synchronized void delete(Ball ball) {
+    public synchronized void deleteBall(Ball ball, BallThread thread) {
         this.balls.remove(ball);
+        this.threads.remove(thread);
         ballCountInPockets++;
     }
 
@@ -37,6 +40,10 @@ public class BallCanvas extends JPanel {
         for (Ball b : balls) {
             b.draw(g2);
         }
+    }
+
+    public Queue<BallThread> getThreads() {
+        return threads;
     }
 
     public int getBallCountInPockets() {

@@ -29,6 +29,6 @@ public class Config {
     public final static Integer POCKET_HEIGHT = 22;
     public final static Color POCKET_COLOR = Color.BLACK;
 
-    public final static Pair<Integer, Integer> EXPERIMENT_COORDINATES = new Pair(50, 50);
+    public final static Pair<Integer, Integer> EXPERIMENT_COORDINATES = new Pair<>(50, 50);
 
 }

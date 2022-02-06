@@ -1,20 +1,36 @@
 package com.oleh.chui;
 
+import java.util.Queue;
+
 public class BallThread extends Thread {
 
-    private final Ball b;
+    private final Queue<BallThread> threadQueue;
+    private final Ball activeBall;
 
-    public BallThread(Ball ball){
-        b = ball;
+    public BallThread(Ball ball, Queue<BallThread> threadQueue){
+        this.activeBall = ball;
+        this.threadQueue = threadQueue;
     }
+
     @Override
     public void run(){
         try{
             while (true) {
-                b.move();
-                if (b.inHole()) {
-                    b.getCanvas().delete(b);
-                    b.getBounceFrame().addOnePointToScore();
+                if (!activeBall.getBallColor().equals(BallColor.GREEN)) {
+                    threadQueue.stream()
+                            .filter(ballThread -> ballThread.getActiveBall().getBallColor().equals(BallColor.GREEN))
+                            .forEach(ballThread -> {
+                                try {
+                                    ballThread.join();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                }
+                activeBall.move();
+                if (activeBall.inHole()) {
+                    activeBall.getCanvas().deleteBall(activeBall, this);
+                    activeBall.getBounceFrame().addOnePointToScore();
                     break;
                 }
                 Thread.sleep(Config.BALL_SLEEP);
@@ -24,4 +40,7 @@ public class BallThread extends Thread {
         }
     }
 
+    public Ball getActiveBall() {
+        return activeBall;
+    }
 }

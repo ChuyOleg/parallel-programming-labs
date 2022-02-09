@@ -1,4 +1,4 @@
-package com.oleh.chui;
+package com.oleh.chui.task5;
 
 public class SymbolPrinter {
 

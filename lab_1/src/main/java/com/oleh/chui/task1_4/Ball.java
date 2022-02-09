@@ -1,4 +1,4 @@
-package com.oleh.chui;
+package com.oleh.chui.task1_4;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

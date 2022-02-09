@@ -1,4 +1,4 @@
-package com.oleh.chui;
+package com.oleh.chui.task1_4;
 
 import javax.swing.*;
 import java.awt.*;

@@ -6,7 +6,9 @@ import ip91.oleh.chui.conditionData.BackpackConditionData;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Comparator;
 import java.util.Random;
+import java.util.TreeSet;
 
 @RequiredArgsConstructor
 @Getter
@@ -16,7 +18,7 @@ public class BackpackPopulationGenerator implements PopulationGenerator {
 
     @Override
     public Population generate(int size) {
-        Individual[] individuals = new Individual[size];
+        TreeSet<Individual> individuals = new TreeSet<>(Comparator.comparingInt(Individual::getFitness));
         Random random = new Random();
 
         for (int individualNum = 0; individualNum < size; individualNum++) {
@@ -38,8 +40,9 @@ public class BackpackPopulationGenerator implements PopulationGenerator {
             }
             Individual individual = new Individual(chromosome);
             individual.setFitness(price);
-            individuals[individualNum] = individual;
+            individuals.add(individual);
         }
+
 
         return new Population(individuals);
     }

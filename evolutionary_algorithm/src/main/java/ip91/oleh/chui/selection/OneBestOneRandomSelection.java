@@ -9,24 +9,17 @@ import java.util.Random;
 
 public class OneBestOneRandomSelection implements Selection {
 
+    private final Random random = new Random();
+
     @Override
     public List<Individual> process(Population population) {
-        Individual theBestIndividual = population.getIndividuals()[0];
-        Individual randomIndividual = null;
-        Random random = new Random();
+        int randomNum = random.nextInt(population.getIndividuals().size() - 1);
 
-        for (Individual individual : population.getIndividuals()) {
-            if (individual.getFitness() > theBestIndividual.getFitness()) {
-                theBestIndividual = individual;
-            }
-        }
+        Individual theBestIndividual = population.getIndividuals().stream()
+                .skip(population.getIndividuals().size() - 1).findFirst().orElseThrow(RuntimeException::new);
 
-        while (randomIndividual == null) {
-            int randomIndex = random.nextInt(population.getIndividuals().length);
-            if (population.getIndividuals()[randomIndex] != theBestIndividual) {
-                randomIndividual = population.getIndividuals()[randomIndex];
-            }
-        }
+        Individual randomIndividual = population.getIndividuals().stream()
+                .skip(randomNum).findFirst().orElseThrow(RuntimeException::new);
 
         return Arrays.asList(theBestIndividual, randomIndividual);
     }

@@ -68,29 +68,21 @@ public class MainBackpack {
     }
 
     public void run() {
-//        System.out.println(myPopulation);
-//        System.out.print("Best = ");
-//        System.out.println(Arrays.stream(myPopulation.getIndividuals()).max(Comparator.comparingInt(MyIndividual::getFitness)).orElse(new MyIndividual(null, Integer.MIN_VALUE)));
+        System.out.println("Population Before = " + population);
 
-//        System.out.println("Running ...");
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 200; i++) {
             List<Individual> bestParents = selection.process(population);
-
-            System.out.println("Best parents size => " + bestParents.size());
 
             List<Individual> offspring = crossover.process(bestParents);
 
             mutation.process(offspring);
 
             generationReplacement.process(population, offspring);
+
         }
 
-//        System.out.println(myPopulation);
-//        System.out.print("Best = ");
-//        MyIndividual finalBest = Arrays.stream(myPopulation.getIndividuals()).max(Comparator.comparingInt(MyIndividual::getFitness)).orElse(new MyIndividual(null, Integer.MIN_VALUE));
-//        System.out.println(finalBest);
+        System.out.println("Population After = " + population);
 
-//        System.out.println("Optimal - Best = " + (13549094 - finalBest.getFitness()));
     }
 
 }

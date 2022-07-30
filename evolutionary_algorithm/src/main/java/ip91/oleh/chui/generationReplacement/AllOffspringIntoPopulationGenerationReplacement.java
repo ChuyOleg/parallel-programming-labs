@@ -3,17 +3,47 @@ package ip91.oleh.chui.generationReplacement;
 import ip91.oleh.chui.Individual;
 import ip91.oleh.chui.Population;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllOffspringIntoPopulationGenerationReplacement implements GenerationReplacement {
 
     @Override
     public void process(Population population, List<Individual> offspring) {
+        List<Individual> haveToBeDeleted = new ArrayList<>();
+        List<Individual> haveToBeAdded = new ArrayList<>();
 
+        int offSpringIndex = 0;
 
+        outerLoop:
+        for (Individual individual : population.getIndividuals()) {
+            if (offSpringIndex >= offspring.size()) {
+                break;
+            }
 
-        System.out.println("Population size -> " + population.getIndividuals().length);
-        System.out.println("Offspring size -> " + offspring.size());
+            while (true) {
+                if (offSpringIndex >= offspring.size()) {
+                    break outerLoop;
+                }
+                Individual child = offspring.get(offSpringIndex);
+                if (isDead(child)) {
+                    offSpringIndex++;
+                    continue;
+                }
+
+                haveToBeDeleted.add(individual);
+                haveToBeAdded.add(child);
+                offSpringIndex++;
+                break;
+            }
+        }
+
+        haveToBeDeleted.forEach(population.getIndividuals()::remove);
+        haveToBeAdded.forEach(population.getIndividuals()::add);
+    }
+
+    private boolean isDead(Individual individual) {
+        return individual.getFitness() == Integer.MIN_VALUE;
     }
 
 }

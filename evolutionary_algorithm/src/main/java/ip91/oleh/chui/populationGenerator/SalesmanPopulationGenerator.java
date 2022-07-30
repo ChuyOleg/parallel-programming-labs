@@ -7,7 +7,10 @@ import ip91.oleh.chui.conditionData.SalesmanConditionData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,7 +22,7 @@ public class SalesmanPopulationGenerator implements PopulationGenerator{
 
     @Override
     public Population generate(int size) {
-        Individual[] individuals = new Individual[size];
+        TreeSet<Individual> individuals = new TreeSet<>(Comparator.comparingInt(Individual::getFitness));
         Random random = new Random();
 
         for (int individualNum = 0; individualNum < size; individualNum++) {
@@ -40,7 +43,7 @@ public class SalesmanPopulationGenerator implements PopulationGenerator{
 
             Individual individual = new Individual(chromosome);
             individual.setFitness(fitness);
-            individuals[individualNum] = individual;
+            individuals.add(individual);
         }
 
         return new Population(individuals);

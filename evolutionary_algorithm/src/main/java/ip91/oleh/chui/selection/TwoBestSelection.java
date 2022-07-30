@@ -10,19 +10,9 @@ public class TwoBestSelection implements Selection {
 
     @Override
     public List<Individual> process(Population population) {
-        Individual theBestIndividual = null;
-        Individual secondBestIndividual = null;
-
-        for (Individual individual : population.getIndividuals()) {
-            if (secondBestIndividual == null || individual.getFitness() > secondBestIndividual.getFitness()) {
-                if (theBestIndividual == null || individual.getFitness() > theBestIndividual.getFitness()) {
-                    secondBestIndividual = theBestIndividual;
-                    theBestIndividual = individual;
-                } else {
-                    secondBestIndividual = individual;
-                }
-            }
-        }
+        Individual theBestIndividual = population.getIndividuals().last();
+        Individual secondBestIndividual = population.getIndividuals().stream()
+                .skip(population.getIndividuals().size() - 2).findFirst().orElseThrow(RuntimeException::new);
 
         return Arrays.asList(theBestIndividual, secondBestIndividual);
     }

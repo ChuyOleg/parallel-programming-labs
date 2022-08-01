@@ -14,7 +14,7 @@ public class TwoBestSelection implements Selection {
         Individual secondBestIndividual = population.getIndividuals().stream()
                 .skip(population.getIndividuals().size() - 2).findFirst().orElseThrow(RuntimeException::new);
 
-        return Arrays.asList(theBestIndividual, secondBestIndividual);
+        return Arrays.asList(secondBestIndividual, theBestIndividual);
     }
 
 }

@@ -12,18 +12,19 @@ public class SalesmanFitnessFunction implements FitnessFunction {
     @Override
     public int calculate(Individual individual) {
         int fitness = 0;
-        int previousCity = 0;
+        int firstCity = (int) individual.getChromosome()[0];
         int lastCity = (int) individual.getChromosome()[individual.getChromosome().length - 1];
+        int previousCity = firstCity;
 
-        for (int gene = 0; gene < individual.getChromosome().length; gene++) {
+        for (int gene = 1; gene < individual.getChromosome().length; gene++) {
             int currentCity = (int) individual.getChromosome()[gene];
 
-            fitness -= conditionData.getRoadMatrix()[previousCity][currentCity];
+            fitness += conditionData.getRoadMatrix()[previousCity][currentCity];
 
             previousCity = currentCity;
         }
 
-        fitness -= conditionData.getRoadMatrix()[lastCity][0];
+        fitness += conditionData.getRoadMatrix()[lastCity][firstCity];
 
         return fitness;
     }

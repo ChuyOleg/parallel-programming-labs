@@ -19,10 +19,13 @@ import ip91.oleh.chui.selection.Selection;
 import ip91.oleh.chui.selection.TwoBestSelection;
 
 import java.util.List;
+import java.util.Random;
 
 public class MainSalesman {
 
     public static void main(String[] args) {
+        Random random = new Random();
+
         SalesmanConditionData salesmanData = ConditionDataGenerator.salesman();
         SalesmanFitnessFunction salesmanFitnessFunction = new SalesmanFitnessFunction(salesmanData);
 
@@ -30,7 +33,7 @@ public class MainSalesman {
         Population population = populationGenerator.generate(Config.POPULATION_SIZE);
 
         Selection twoBestSelection = new TwoBestSelection();
-        Selection oneBestOneRandomSelection = new OneBestOneRandomSelection();
+        Selection oneBestOneRandomSelection = new OneBestOneRandomSelection(random);
         Selection halfPopulationSelection = new HalfPopulationSelection();
 
         List<Individual> sample_1 = twoBestSelection.process(population);

@@ -15,7 +15,7 @@ class SalesmanFitnessFunctionTest {
 
     private final SalesmanConditionData salesmanConditionData = mock(SalesmanConditionData.class);
 
-    private final SalesmanFitnessFunction salesmanFitnessFunction = new SalesmanFitnessFunction(salesmanConditionData);
+    private final FitnessFunction fitnessFunction = new SalesmanFitnessFunction(salesmanConditionData);
 
     @BeforeEach
     void init() {
@@ -35,7 +35,7 @@ class SalesmanFitnessFunctionTest {
         individual = new Individual(chromosome);
 
         int expectedResult = 20;
-        int actualResult = salesmanFitnessFunction.calculate(individual);
+        int actualResult = fitnessFunction.calculate(individual);
 
         Assertions.assertEquals(expectedResult, actualResult);
     }
@@ -46,7 +46,7 @@ class SalesmanFitnessFunctionTest {
         individual = new Individual(chromosome);
 
         int expectedResult = 17;
-        int actualResult = salesmanFitnessFunction.calculate(individual);
+        int actualResult = fitnessFunction.calculate(individual);
 
         Assertions.assertEquals(expectedResult, actualResult);
     }
@@ -57,7 +57,7 @@ class SalesmanFitnessFunctionTest {
         individual = new Individual(chromosome);
 
         int expectedResult = 17;
-        int actualResult = salesmanFitnessFunction.calculate(individual);
+        int actualResult = fitnessFunction.calculate(individual);
 
         Assertions.assertEquals(expectedResult, actualResult);
     }

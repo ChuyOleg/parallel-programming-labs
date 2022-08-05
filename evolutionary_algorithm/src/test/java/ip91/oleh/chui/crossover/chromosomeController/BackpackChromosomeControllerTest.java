@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BackpackChromosomeControllerTest {
 
-    private final BackpackChromosomeController backpackChromosomeController = new BackpackChromosomeController();
+    private final ChromosomeController chromosomeController = new BackpackChromosomeController();
 
     private Individual parent1;
     private Individual parent2;
@@ -29,13 +29,13 @@ class BackpackChromosomeControllerTest {
 
         Object[] expectedChromosome = { true, true, true, false, false, false, false, true };
 
-        Object[] actualChromosome = backpackChromosomeController.createUsingPointCrossover(parent1, parent2, point);
+        Object[] actualChromosome = chromosomeController.createUsingPointCrossover(parent1, parent2, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
 
         expectedChromosome = new Object[]{ false, true, false, true, false, true, true, false };
 
-        actualChromosome = backpackChromosomeController.createUsingPointCrossover(parent2, parent1, point);
+        actualChromosome = chromosomeController.createUsingPointCrossover(parent2, parent1, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
     }
@@ -46,13 +46,13 @@ class BackpackChromosomeControllerTest {
 
         Object[] expectedChromosome = { true, true, false, true, false, true, true, true };
 
-        Object[] actualChromosome = backpackChromosomeController.createUsingPointCrossover(parent1, parent2, point);
+        Object[] actualChromosome = chromosomeController.createUsingPointCrossover(parent1, parent2, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
 
         expectedChromosome = new Object[]{ false, true, true, false, false, false, false, false };
 
-        actualChromosome = backpackChromosomeController.createUsingPointCrossover(parent2, parent1, point);
+        actualChromosome = chromosomeController.createUsingPointCrossover(parent2, parent1, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
     }
@@ -63,13 +63,13 @@ class BackpackChromosomeControllerTest {
 
         Object[] expectedChromosome = { true, true, false, false, false, false, false, true };
 
-        Object[] actualChromosome = backpackChromosomeController.createUsingPointCrossover(parent1, parent2, point);
+        Object[] actualChromosome = chromosomeController.createUsingPointCrossover(parent1, parent2, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
 
         expectedChromosome = new Object[]{ false, true, true,true, false, true, true, false };
 
-        actualChromosome = backpackChromosomeController.createUsingPointCrossover(parent2, parent1, point);
+        actualChromosome = chromosomeController.createUsingPointCrossover(parent2, parent1, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
     }

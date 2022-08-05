@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SalesmanChromosomeControllerTest {
 
-    private final SalesmanChromosomeController salesmanChromosomeController = new SalesmanChromosomeController();
+    private final ChromosomeController chromosomeController = new SalesmanChromosomeController();
 
     private Individual parent1;
     private Individual parent2;
@@ -28,13 +28,13 @@ class SalesmanChromosomeControllerTest {
 
         Object[] expectedChromosome = { 2, 5, 6, 7, 0, 4, 3, 1 };
 
-        Object[] actualChromosome = salesmanChromosomeController.createUsingPointCrossover(parent1, parent2, point);
+        Object[] actualChromosome = chromosomeController.createUsingPointCrossover(parent1, parent2, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
 
         expectedChromosome = new Object[]{ 5, 0, 3, 2, 1, 6, 7, 4 };
 
-        actualChromosome = salesmanChromosomeController.createUsingPointCrossover(parent2, parent1, point);
+        actualChromosome = chromosomeController.createUsingPointCrossover(parent2, parent1, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
     }
@@ -45,13 +45,13 @@ class SalesmanChromosomeControllerTest {
 
         Object[] expectedChromosome = { 2, 0, 3, 5, 1, 6, 7, 4 };
 
-        Object[] actualChromosome = salesmanChromosomeController.createUsingPointCrossover(parent1, parent2, point);
+        Object[] actualChromosome = chromosomeController.createUsingPointCrossover(parent1, parent2, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
 
         expectedChromosome = new Object[]{ 5, 2, 6, 7, 0, 4, 3, 1 };
 
-        actualChromosome = salesmanChromosomeController.createUsingPointCrossover(parent2, parent1, point);
+        actualChromosome = chromosomeController.createUsingPointCrossover(parent2, parent1, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
     }
@@ -62,13 +62,13 @@ class SalesmanChromosomeControllerTest {
 
         Object[] expectedChromosome = { 2, 0, 3, 7, 5, 4, 6, 1 };
 
-        Object[] actualChromosome = salesmanChromosomeController.createUsingPointCrossover(parent1, parent2, point);
+        Object[] actualChromosome = chromosomeController.createUsingPointCrossover(parent1, parent2, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
 
         expectedChromosome = new Object[]{ 5, 2, 6, 0, 1, 3, 7, 4 };
 
-        actualChromosome = salesmanChromosomeController.createUsingPointCrossover(parent2, parent1, point);
+        actualChromosome = chromosomeController.createUsingPointCrossover(parent2, parent1, point);
 
         assertArrayEquals(expectedChromosome, actualChromosome);
     }

@@ -15,7 +15,7 @@ class BackpackFitnessFunctionTest {
 
     private final BackpackConditionData backpackConditionData = mock(BackpackConditionData.class);
 
-    private final BackpackFitnessFunction backpackFitnessFunction = new BackpackFitnessFunction(backpackConditionData);
+    private final FitnessFunction fitnessFunction = new BackpackFitnessFunction(backpackConditionData);
 
     @BeforeEach
     void init() {
@@ -37,7 +37,7 @@ class BackpackFitnessFunctionTest {
     @Test
     void calculateShouldReturnCorrectFitnessForAliveIndividual() {
         int expectedResult = 14;
-        int actualResult = backpackFitnessFunction.calculate(aliveIndividual);
+        int actualResult = fitnessFunction.calculate(aliveIndividual);
 
         Assertions.assertEquals(expectedResult, actualResult);
     }
@@ -45,7 +45,7 @@ class BackpackFitnessFunctionTest {
     @Test
     void calculateShouldReturnCorrectFitnessForDeadIndividual() {
         int expectedResult = Integer.MIN_VALUE;
-        int actualResult = backpackFitnessFunction.calculate(deadIndividual);
+        int actualResult = fitnessFunction.calculate(deadIndividual);
 
         Assertions.assertEquals(expectedResult, actualResult);
     }

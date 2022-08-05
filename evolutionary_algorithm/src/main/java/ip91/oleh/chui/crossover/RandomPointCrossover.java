@@ -10,9 +10,9 @@ public class RandomPointCrossover extends AbstractPointCrossover {
 
     private final Random random;
 
-    public RandomPointCrossover(FitnessFunction fitnessFunction, ChromosomeController chromosomeController) {
+    public RandomPointCrossover(FitnessFunction fitnessFunction, ChromosomeController chromosomeController, Random random) {
         super(fitnessFunction, chromosomeController);
-        random = new Random();
+        this.random = random;
     }
 
     @Override

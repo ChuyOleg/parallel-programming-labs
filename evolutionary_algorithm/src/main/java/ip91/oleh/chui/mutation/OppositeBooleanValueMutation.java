@@ -12,14 +12,13 @@ import java.util.Random;
 public class OppositeBooleanValueMutation implements Mutation {
 
     private final FitnessFunction fitnessFunction;
+    private final Random random;
 
     @Override
     public void process(List<Individual> individuals) {
-        Random random = new Random();
-
         for (Individual individual : individuals) {
             for (int geneNum = 0; geneNum < individual.getChromosome().length; geneNum++) {
-                boolean chance = random.nextInt(100) < Config.MUTATION_PERCENTAGE;
+                boolean chance = random.nextInt(Config.MUTATION_MEASURE) < Config.MUTATION_PERCENTAGE;
                 if (chance) {
                     boolean geneValue = (boolean) individual.getChromosome()[geneNum];
                     individual.getChromosome()[geneNum] = !geneValue;

@@ -5,6 +5,7 @@ public class Config {
     private Config() {}
 
     public static final int POPULATION_SIZE = 20;
+    public static final int MUTATION_MEASURE = 100;
     public static final int MUTATION_PERCENTAGE = 5;
 
     public static final int BACKPACK_THING_COUNT = 100;

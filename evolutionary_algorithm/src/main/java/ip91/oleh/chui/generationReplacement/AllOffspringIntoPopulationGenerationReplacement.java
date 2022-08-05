@@ -17,10 +17,6 @@ public class AllOffspringIntoPopulationGenerationReplacement implements Generati
 
         outerLoop:
         for (Individual individual : population.getIndividuals()) {
-            if (offSpringIndex >= offspring.size()) {
-                break;
-            }
-
             while (true) {
                 if (offSpringIndex >= offspring.size()) {
                     break outerLoop;

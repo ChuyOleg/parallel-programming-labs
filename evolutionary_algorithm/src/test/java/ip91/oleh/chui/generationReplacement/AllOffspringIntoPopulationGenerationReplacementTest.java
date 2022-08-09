@@ -1,7 +1,7 @@
 package ip91.oleh.chui.generationReplacement;
 
-import ip91.oleh.chui.Individual;
-import ip91.oleh.chui.Population;
+import ip91.oleh.chui.model.Individual;
+import ip91.oleh.chui.model.Population;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +34,8 @@ class AllOffspringIntoPopulationGenerationReplacementTest {
 
     @Test
     void processShouldWorkCorrectlyForBackpack() {
-        TreeSet<Individual> individuals = new TreeSet<>(getMaximizationComparator());
-        individuals.addAll(Arrays.asList(parent_1, parent_2, parent_3, parent_4));
+        List<Individual> individuals = new ArrayList<>(Arrays.asList(parent_1, parent_2, parent_3, parent_4));
+        individuals.sort(getMaximizationComparator());
         Population population = new Population(individuals);
 
         List<Individual> offspring = Arrays.asList(aliveChild_1, aliveChild_2, deadChild);
@@ -52,8 +52,8 @@ class AllOffspringIntoPopulationGenerationReplacementTest {
 
     @Test
     void processShouldWorkCorrectlyForSalesman() {
-        TreeSet<Individual> individuals = new TreeSet<>(getMinimizationComparator());
-        individuals.addAll(Arrays.asList(parent_1, parent_2, parent_3, parent_4));
+        List<Individual> individuals = new ArrayList<>(Arrays.asList(parent_1, parent_2, parent_3, parent_4));
+        individuals.sort(getMinimizationComparator());
         Population population = new Population(individuals);
 
         List<Individual> offspring = Arrays.asList(aliveChild_1, aliveChild_2, deadChild);

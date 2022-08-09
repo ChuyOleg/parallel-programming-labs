@@ -1,27 +1,26 @@
 package ip91.oleh.chui.populationGenerator;
 
-import ip91.oleh.chui.Individual;
-import ip91.oleh.chui.Population;
+import ip91.oleh.chui.model.Individual;
+import ip91.oleh.chui.model.Population;
 import ip91.oleh.chui.conditionData.BackpackConditionData;
+import ip91.oleh.chui.config.Config;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Comparator;
-import java.util.Random;
-import java.util.TreeSet;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Getter
 public class BackpackPopulationGenerator implements PopulationGenerator {
 
     private final BackpackConditionData conditionData;
+    private final Random random;
 
     @Override
-    public Population generate(int size) {
-        TreeSet<Individual> individuals = new TreeSet<>(Comparator.comparingInt(Individual::getFitness));
-        Random random = new Random();
+    public Population generate() {
+        List<Individual> individuals = new ArrayList<>(Config.POPULATION_SIZE);
 
-        for (int individualNum = 0; individualNum < size; individualNum++) {
+        for (int individualNum = 0; individualNum < Config.POPULATION_SIZE; individualNum++) {
             Object[] chromosome = new Object[conditionData.getWeightTable().length];
             int backpackCurrentWeight = 0;
             int price = 0;

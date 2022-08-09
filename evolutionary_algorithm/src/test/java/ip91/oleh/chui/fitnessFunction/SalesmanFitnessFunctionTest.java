@@ -1,6 +1,6 @@
 package ip91.oleh.chui.fitnessFunction;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.conditionData.SalesmanConditionData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,10 +31,10 @@ class SalesmanFitnessFunctionTest {
 
     @Test
     void calculateOneShouldReturnCorrectFitness() {
-        Object[] chromosome = { 2, 0, 3, 1 };
+        Object[] chromosome = { 2, 3, 1 };
         individual = new Individual(chromosome);
 
-        int expectedResult = 20;
+        int expectedResult = 17;
         int actualResult = fitnessFunction.calculate(individual);
 
         Assertions.assertEquals(expectedResult, actualResult);
@@ -42,10 +42,10 @@ class SalesmanFitnessFunctionTest {
 
     @Test
     void calculateOneShouldReturnCorrectFitness_2() {
-        Object[] chromosome = { 1, 0, 2, 3 };
+        Object[] chromosome = { 1, 2, 3 };
         individual = new Individual(chromosome);
 
-        int expectedResult = 17;
+        int expectedResult = 23;
         int actualResult = fitnessFunction.calculate(individual);
 
         Assertions.assertEquals(expectedResult, actualResult);
@@ -53,10 +53,10 @@ class SalesmanFitnessFunctionTest {
 
     @Test
     void calculateOneShouldReturnCorrectFitness_3() {
-        Object[] chromosome = { 3, 2, 0, 1 };
+        Object[] chromosome = { 3, 2, 1 };
         individual = new Individual(chromosome);
 
-        int expectedResult = 17;
+        int expectedResult = 23;
         int actualResult = fitnessFunction.calculate(individual);
 
         Assertions.assertEquals(expectedResult, actualResult);

@@ -2,6 +2,7 @@ package ip91.oleh.chui.util;
 
 import ip91.oleh.chui.conditionData.BackpackConditionData;
 import ip91.oleh.chui.conditionData.SalesmanConditionData;
+import ip91.oleh.chui.config.Config;
 
 import java.io.*;
 import java.util.Arrays;
@@ -10,9 +11,6 @@ import java.util.Scanner;
 public class CustomPrinter {
 
     private CustomPrinter() {}
-
-    private final static String BACKPACK_CONDITION_DATA_FILE_PATH = "src/main/resources/backpackConditionData.txt";
-    private final static String SALESMAN_CONDITION_DATA_FILE_PATH = "src/main/resources/salesmanConditionData.txt";
 
     private final static String WEIGHT_TABLE = "Weight table";
     private final static String PRICE_TABLE = "Price table";
@@ -24,7 +22,7 @@ public class CustomPrinter {
     private final static String SUB_ARRAY_SPLIT_REGEX = "], ";
 
     public static void writeBackpackConditionDataToFile(BackpackConditionData data) throws IOException {
-        FileWriter fileWriter = new FileWriter(BACKPACK_CONDITION_DATA_FILE_PATH);
+        FileWriter fileWriter = new FileWriter(Config.BACKPACK_CONDITION_DATA_FILE_NAME);
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
         printWriter.println(WEIGHT_TABLE);
@@ -43,7 +41,7 @@ public class CustomPrinter {
     }
 
     public static void writeSalesmanConditionDataToFile(SalesmanConditionData data) throws IOException {
-        FileWriter fileWriter = new FileWriter(SALESMAN_CONDITION_DATA_FILE_PATH);
+        FileWriter fileWriter = new FileWriter(Config.SALESMAN_CONDITION_DATA_FILE_NAME);
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
         printWriter.println(ROAD_MATRIX);
@@ -52,12 +50,17 @@ public class CustomPrinter {
         printWriter.close();
     }
 
-    public static BackpackConditionData readBackpackConditionDataFromFile() throws IOException {
+    public static BackpackConditionData readBackpackConditionDataFromFile() {
         int[] weightTable = null;
         int[] priceTable = null;
         int maxWeight = 0;
 
-        Scanner scanner = new Scanner(new File(BACKPACK_CONDITION_DATA_FILE_PATH));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(Config.BACKPACK_CONDITION_DATA_FILE_NAME));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
@@ -85,10 +88,15 @@ public class CustomPrinter {
         return new BackpackConditionData(weightTable, priceTable, maxWeight);
     }
 
-    public static SalesmanConditionData readSalesmanConditionDataFromFile() throws IOException {
+    public static SalesmanConditionData readSalesmanConditionDataFromFile() {
         int[][] roadMatrix = null;
 
-        Scanner scanner = new Scanner(new File(SALESMAN_CONDITION_DATA_FILE_PATH));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(Config.SALESMAN_CONDITION_DATA_FILE_NAME));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
@@ -100,8 +108,6 @@ public class CustomPrinter {
 
                 for (int index = 0; index < stringArrayOfArray.length; index++) {
                     String string = stringArrayOfArray[index];
-
-                    System.out.println(stringArrayOfArray[index]);
 
                     String[] stringArray = string.substring(1).split(ARRAY_SPLIT_REGEX);
 

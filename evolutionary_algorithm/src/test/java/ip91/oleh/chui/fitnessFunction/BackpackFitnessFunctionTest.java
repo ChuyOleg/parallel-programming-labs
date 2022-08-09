@@ -1,6 +1,6 @@
 package ip91.oleh.chui.fitnessFunction;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.conditionData.BackpackConditionData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

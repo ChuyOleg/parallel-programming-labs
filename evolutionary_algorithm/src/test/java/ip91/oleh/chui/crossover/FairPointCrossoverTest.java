@@ -1,8 +1,7 @@
 package ip91.oleh.chui.crossover;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.crossover.chromosomeController.ChromosomeController;
-import ip91.oleh.chui.fitnessFunction.FitnessFunction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +15,8 @@ import static org.mockito.Mockito.when;
 
 class FairPointCrossoverTest {
 
-    private final FitnessFunction fitnessFunction = mock(FitnessFunction.class);
     private final ChromosomeController chromosomeController = mock(ChromosomeController.class);
-    private final FairPointCrossover fairPointCrossover = new FairPointCrossover(fitnessFunction, chromosomeController);
+    private final FairPointCrossover fairPointCrossover = new FairPointCrossover(chromosomeController);
 
     private List<Individual> parents_1;
     private List<Individual> parents_2;
@@ -55,16 +53,6 @@ class FairPointCrossoverTest {
 
         Assertions.assertEquals(expectedResult, actualResult);
     }
-
-    // TODO: uncomment based on code <AbstractPointCrossover: 34 line>
-//    @Test
-//    void processShouldReturnEmptyList() {
-//        when(fitnessFunction.calculate(any())).thenReturn(Integer.MIN_VALUE);
-//
-//        List<Individual> actualOffspring = fairPointCrossover.process(parents_1);
-//
-//        Assertions.assertEquals(0, actualOffspring.size());
-//    }
 
     @Test
     void processShouldReturnCorrectOffspring_1() {

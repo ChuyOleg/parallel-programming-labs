@@ -1,16 +1,13 @@
 package ip91.oleh.chui.populationGenerator;
 
 import ip91.oleh.chui.config.Config;
-import ip91.oleh.chui.Individual;
-import ip91.oleh.chui.Population;
+import ip91.oleh.chui.model.Individual;
+import ip91.oleh.chui.model.Population;
 import ip91.oleh.chui.conditionData.SalesmanConditionData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,27 +16,27 @@ import java.util.stream.IntStream;
 public class SalesmanPopulationGenerator implements PopulationGenerator{
 
     private final SalesmanConditionData conditionData;
+    private final Random random;
 
     @Override
-    public Population generate(int size) {
-        TreeSet<Individual> individuals = new TreeSet<>(Comparator.comparingInt(Individual::getFitness));
-        Random random = new Random();
+    public Population generate() {
+        List<Individual> individuals = new ArrayList<>(Config.POPULATION_SIZE);
 
-        for (int individualNum = 0; individualNum < size; individualNum++) {
-            Object[] chromosome = new Object[Config.SALESMAN_CITY_COUNT - 1];
-            List<Integer> freeCity = IntStream.range(1, Config.SALESMAN_CITY_COUNT).boxed().collect(Collectors.toList());
+        for (int individualNum = 0; individualNum < Config.POPULATION_SIZE; individualNum++) {
+            Object[] chromosome = new Object[conditionData.getRoadMatrix().length - 1];
+            List<Integer> freeCity = IntStream.range(1, conditionData.getRoadMatrix().length).boxed().collect(Collectors.toList());
             int fitness = 0;
             int previousCity = 0;
 
-            for (int gene = 0; gene < Config.SALESMAN_CITY_COUNT - 1; gene++) {
+            for (int gene = 0; gene < conditionData.getRoadMatrix().length - 1; gene++) {
                 int randomCityIndex = random.nextInt(freeCity.size());
                 int randomCity = freeCity.get(randomCityIndex);
                 chromosome[gene] = randomCity;
-                fitness -= conditionData.getRoadMatrix()[previousCity][randomCity];
+                fitness += conditionData.getRoadMatrix()[previousCity][randomCity];
                 previousCity = randomCity;
                 freeCity.remove(randomCityIndex);
             }
-            fitness -= conditionData.getRoadMatrix()[previousCity][0];
+            fitness += conditionData.getRoadMatrix()[previousCity][0];
 
             Individual individual = new Individual(chromosome);
             individual.setFitness(fitness);

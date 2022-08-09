@@ -1,8 +1,7 @@
 package ip91.oleh.chui.crossover;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.crossover.chromosomeController.ChromosomeController;
-import ip91.oleh.chui.fitnessFunction.FitnessFunction;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public abstract class AbstractPointCrossover implements Crossover {
 
-    private final FitnessFunction fitnessFunction;
     private final ChromosomeController chromosomeController;
 
     @Override
@@ -30,20 +28,11 @@ public abstract class AbstractPointCrossover implements Crossover {
             Individual individual_1 = new Individual(child_1Chromosome);
             Individual individual_2 = new Individual(child_2Chromosome);
 
-            individual_1.setFitness(fitnessFunction.calculate(individual_1));
-            individual_2.setFitness(fitnessFunction.calculate(individual_2));
-
-            addToOffspringIfIsAlive(individual_1, offspring);
-            addToOffspringIfIsAlive(individual_2, offspring);
+            offspring.add(individual_1);
+            offspring.add(individual_2);
         }
 
         return offspring;
-    }
-
-    private void addToOffspringIfIsAlive(Individual individual, List<Individual> offspring) {
-        if (individual.getFitness() > Integer.MIN_VALUE) {
-            offspring.add(individual);
-        }
     }
 
     protected abstract int getPoint(Individual individual);

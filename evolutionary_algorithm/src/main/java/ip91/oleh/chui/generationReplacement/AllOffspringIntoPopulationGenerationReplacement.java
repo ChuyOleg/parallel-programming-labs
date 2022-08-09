@@ -1,7 +1,7 @@
 package ip91.oleh.chui.generationReplacement;
 
-import ip91.oleh.chui.Individual;
-import ip91.oleh.chui.Population;
+import ip91.oleh.chui.model.Individual;
+import ip91.oleh.chui.model.Population;
 
 import java.util.ArrayList;
 import java.util.List;

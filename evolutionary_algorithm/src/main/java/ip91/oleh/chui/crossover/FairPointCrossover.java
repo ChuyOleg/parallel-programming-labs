@@ -1,14 +1,13 @@
 package ip91.oleh.chui.crossover;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.crossover.chromosomeController.ChromosomeController;
-import ip91.oleh.chui.fitnessFunction.FitnessFunction;
 
 
 public class FairPointCrossover extends AbstractPointCrossover {
 
-    public FairPointCrossover(FitnessFunction fitnessFunction, ChromosomeController chromosomeController) {
-        super(fitnessFunction, chromosomeController);
+    public FairPointCrossover(ChromosomeController chromosomeController) {
+        super(chromosomeController);
     }
 
     @Override

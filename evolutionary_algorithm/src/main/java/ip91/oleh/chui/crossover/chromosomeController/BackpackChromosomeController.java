@@ -1,6 +1,6 @@
 package ip91.oleh.chui.crossover.chromosomeController;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 
 import java.util.ArrayList;
 import java.util.Arrays;

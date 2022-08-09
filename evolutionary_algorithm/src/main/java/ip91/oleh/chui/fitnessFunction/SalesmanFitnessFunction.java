@@ -1,6 +1,6 @@
 package ip91.oleh.chui.fitnessFunction;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.conditionData.SalesmanConditionData;
 import lombok.RequiredArgsConstructor;
 
@@ -12,11 +12,11 @@ public class SalesmanFitnessFunction implements FitnessFunction {
     @Override
     public int calculate(Individual individual) {
         int fitness = 0;
-        int firstCity = (int) individual.getChromosome()[0];
+        int firstCity = 0;
         int lastCity = (int) individual.getChromosome()[individual.getChromosome().length - 1];
         int previousCity = firstCity;
 
-        for (int gene = 1; gene < individual.getChromosome().length; gene++) {
+        for (int gene = 0; gene < individual.getChromosome().length; gene++) {
             int currentCity = (int) individual.getChromosome()[gene];
 
             fitness += conditionData.getRoadMatrix()[previousCity][currentCity];

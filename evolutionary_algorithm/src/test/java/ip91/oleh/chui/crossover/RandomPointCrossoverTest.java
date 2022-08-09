@@ -1,8 +1,7 @@
 package ip91.oleh.chui.crossover;
 
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.crossover.chromosomeController.ChromosomeController;
-import ip91.oleh.chui.fitnessFunction.FitnessFunction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +13,9 @@ import static org.mockito.Mockito.when;
 
 class RandomPointCrossoverTest {
 
-    private final FitnessFunction fitnessFunction = mock(FitnessFunction.class);
     private final ChromosomeController chromosomeController = mock(ChromosomeController.class);
     private final Random random = mock(Random.class);
-    private final RandomPointCrossover randomPointCrossover = new RandomPointCrossover(fitnessFunction, chromosomeController, random);
+    private final RandomPointCrossover randomPointCrossover = new RandomPointCrossover(chromosomeController, random);
 
     private final Object[] chromosome = { true, true, false, true, false, false, true, false };
 

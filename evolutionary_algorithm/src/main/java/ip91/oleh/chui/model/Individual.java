@@ -1,4 +1,4 @@
-package ip91.oleh.chui;
+package ip91.oleh.chui.model;
 
 import lombok.*;
 

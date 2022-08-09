@@ -1,7 +1,7 @@
 package ip91.oleh.chui.selection;
 
-import ip91.oleh.chui.Individual;
-import ip91.oleh.chui.Population;
+import ip91.oleh.chui.model.Individual;
+import ip91.oleh.chui.model.Population;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
@@ -17,11 +17,8 @@ public class OneBestOneRandomSelection implements Selection {
     public List<Individual> process(Population population) {
         int randomNum = random.nextInt(population.getIndividuals().size() - 1);
 
-        Individual theBestIndividual = population.getIndividuals().stream()
-                .skip(population.getIndividuals().size() - 1).findFirst().orElseThrow(RuntimeException::new);
-
-        Individual randomIndividual = population.getIndividuals().stream()
-                .skip(randomNum).findFirst().orElseThrow(RuntimeException::new);
+        Individual theBestIndividual = population.getIndividuals().get(population.getIndividuals().size() - 1);
+        Individual randomIndividual = population.getIndividuals().get(randomNum);
 
         return Arrays.asList(randomIndividual, theBestIndividual);
     }

@@ -1,7 +1,7 @@
 package ip91.oleh.chui.mutation;
 
 import ip91.oleh.chui.config.Config;
-import ip91.oleh.chui.Individual;
+import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.fitnessFunction.FitnessFunction;
 import lombok.RequiredArgsConstructor;
 

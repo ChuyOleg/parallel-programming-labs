@@ -1,15 +1,12 @@
 package ip91.oleh.chui.selection;
 
-import ip91.oleh.chui.Individual;
-import ip91.oleh.chui.Population;
+import ip91.oleh.chui.model.Individual;
+import ip91.oleh.chui.model.Population;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 class TwoBestSelectionTest {
 
@@ -32,13 +29,11 @@ class TwoBestSelectionTest {
 
     @Test
     void processBackpackPopulationShouldReturnCorrectSelection() {
-        TreeSet<Individual> individualTreeSet = new TreeSet<>(getMaximizationComparator());
-        individualTreeSet.add(individualFitness_1);
-        individualTreeSet.add(individualFitness_3);
-        individualTreeSet.add(individualFitness_2);
-        individualTreeSet.add(individualFitness_4);
-        individualTreeSet.add(individualFitness_5);
-        population = new Population(individualTreeSet);
+        List<Individual> individuals = new ArrayList<>(Arrays.asList(
+                individualFitness_1, individualFitness_3, individualFitness_2, individualFitness_4, individualFitness_5)
+        );
+        individuals.sort(getMaximizationComparator());
+        population = new Population(individuals);
 
         List<Individual> expectedResult = Arrays.asList(individualFitness_4, individualFitness_5);
         List<Individual> actualResult = selection.process(population);
@@ -48,13 +43,11 @@ class TwoBestSelectionTest {
 
     @Test
     void processSalesmanPopulationShouldReturnCorrectSelection() {
-        TreeSet<Individual> individualTreeSet = new TreeSet<>(getMinimizationComparator());
-        individualTreeSet.add(individualFitness_1);
-        individualTreeSet.add(individualFitness_3);
-        individualTreeSet.add(individualFitness_2);
-        individualTreeSet.add(individualFitness_4);
-        individualTreeSet.add(individualFitness_5);
-        population = new Population(individualTreeSet);
+        List<Individual> individuals = new ArrayList<>(Arrays.asList(
+                individualFitness_1, individualFitness_3, individualFitness_2, individualFitness_4, individualFitness_5)
+        );
+        individuals.sort(getMinimizationComparator());
+        population = new Population(individuals);
 
         List<Individual> expectedResult = Arrays.asList(individualFitness_2, individualFitness_1);
         List<Individual> actualResult = selection.process(population);

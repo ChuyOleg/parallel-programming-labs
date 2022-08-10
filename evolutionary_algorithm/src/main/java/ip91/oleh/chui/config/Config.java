@@ -4,26 +4,39 @@ public class Config {
 
     private Config() {}
 
-    public static final AlgorithmType algorithmType = AlgorithmType.BACKPACK;
-    public static final TaskType taskType = TaskType.MAXIMIZATION;
-    public static final SelectionType selectionType = SelectionType.HALF_POPULATION;
-    public static final CrossoverType crossoverType = CrossoverType.RANDOM_POINT;
-    public static final MutationType mutationType = MutationType.OPPOSITE_VALUE;
-    public static final GenerationReplacementType generationReplacementType = GenerationReplacementType.All_OFFSPRING_INTO_POPULATION;
-    public static final ConditionDataType conditionDataType = ConditionDataType.FROM_FILE;
+    // BACKPACK vs SALESMAN
+    public static final TaskName TASK_NAME = TaskName.BACKPACK;
+    // MAXIMIZATION vs MINIMIZATION
+    public static final TaskType TASK_TYPE = TaskType.MAXIMIZATION;
 
+    // RANDOM vs FROM_FILE
+    public static final ConditionDataType CONDITION_DATA_TYPE = ConditionDataType.RANDOM;
     public static final String BACKPACK_CONDITION_DATA_FILE_NAME = "src/main/resources/backpackConditionData_1.txt";
     public static final String SALESMAN_CONDITION_DATA_FILE_NAME = "src/main/resources/salesmanConditionData_1.txt";
 
-    public static final int MAX_GENERATION_NUMBER = 5000;
-    public static final int GENERATION_WITHOUT_CHANGING_LIMIT = 500;
+    // PARALLEL vs SEQUENCE
+    public static final AlgorithmType ALGORITHM_TYPE = AlgorithmType.PARALLEL;
+    public static final int CORE_CPU_NUMBER = 2;
 
-    public static final int POPULATION_SIZE = 10;
-    public static final int MUTATION_MEASURE = 100;
+    // TWO_BEST vs ONE_BEST_ONE_RANDOM vs HALF_POPULATION
+    public static final SelectionType SELECTION_TYPE = SelectionType.HALF_POPULATION;
+    // FAIR_POINT vs RANDOM_POINT
+    public static final CrossoverType CROSSOVER_TYPE = CrossoverType.RANDOM_POINT;
+    // BACKPACK -> OPPOSITE_VALUE vs SWAP_GENES; SALESMAN -> only SWAP_GENES
+    public static final MutationType MUTATION_TYPE = MutationType.SWAP_GENES;
+    // All_OFFSPRING_INTO_POPULATION
+    public static final GenerationReplacementType GENERATION_REPLACEMENT_TYPE = GenerationReplacementType.All_OFFSPRING_INTO_POPULATION;
+
+    public static final int MAX_GENERATION_NUMBER = 5000;
+    public static final int GENERATION_WITHOUT_CHANGING_LIMIT = 15000;
+
+    public static final int POPULATION_SIZE = 500;
+    // IF MUTATION_MEASURE = 100, MUTATION_PERCENTAGE = 1 then chance for mutation = 1/100;
+    public static final int MUTATION_MEASURE = 1000;
     public static final int MUTATION_PERCENTAGE = 1;
 
     /* Backpack Configuration */
-    public static final int BACKPACK_THING_COUNT = 20;
+    public static final int BACKPACK_THING_COUNT = 50;
     public static final int THING_MIN_WEIGHT = 1;
     public static final int THING_MAX_WEIGHT = 1000;
     public static final int BACKPACK_MAX_WEIGHT = BACKPACK_THING_COUNT * (THING_MAX_WEIGHT + THING_MIN_WEIGHT) / 3;
@@ -32,9 +45,9 @@ public class Config {
     //*****************************
 
     /* Salesman Configuration */
-    public static final int SALESMAN_CITY_COUNT = 500;
+    public static final int SALESMAN_CITY_COUNT = 20;
     public static final int SALESMAN_MIN_LENGTH = 2;
-    public static final int SALESMAN_MAX_LENGTH = 10;
+    public static final int SALESMAN_MAX_LENGTH = 1000;
     //*****************************
 
 }

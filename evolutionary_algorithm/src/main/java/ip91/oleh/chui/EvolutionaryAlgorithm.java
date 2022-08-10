@@ -18,6 +18,7 @@ import ip91.oleh.chui.generationReplacement.GenerationReplacement;
 import ip91.oleh.chui.model.Individual;
 import ip91.oleh.chui.model.Population;
 import ip91.oleh.chui.model.Result;
+import ip91.oleh.chui.model.RuntimeInfo;
 import ip91.oleh.chui.mutation.Mutation;
 import ip91.oleh.chui.mutation.OppositeBooleanValueMutation;
 import ip91.oleh.chui.mutation.SwapGenesMutation;
@@ -38,9 +39,6 @@ public class EvolutionaryAlgorithm {
     private final BackpackConditionData backpackConditionData;
     private final SalesmanConditionData salesmanConditionData;
 
-    private Individual bestIndividual;
-    private int bestIndividualNotChangeCounter;
-
     private Selection selection;
     private Crossover crossover;
     private Mutation mutation;
@@ -57,7 +55,7 @@ public class EvolutionaryAlgorithm {
         initGenerationReplacement();
     }
 
-    public Result run(Population population) {
+    public Result run(Population population, RuntimeInfo info) {
         sortPopulationBasedOnTaskType(population);
         int generationCounter;
 
@@ -72,16 +70,16 @@ public class EvolutionaryAlgorithm {
 
             sortPopulationBasedOnTaskType(population);
 
-            changeBestIndividualBasedOnTaskTypeIfPossible(population);
+            changeBestIndividualBasedOnTaskTypeIfPossible(population, info);
 
-            if (bestIndividualNotChangeCounter == Config.GENERATION_WITHOUT_CHANGING_LIMIT) break;
+            if (info.getBestIndividualNotChangeCounter() == Config.GENERATION_WITHOUT_CHANGING_LIMIT) break;
         }
 
-        return new Result(bestIndividual, generationCounter);
+        return new Result(info.getBestIndividual(), generationCounter);
     }
 
     private FitnessFunction getFitnessFunction() {
-        switch (Config.algorithmType) {
+        switch (Config.TASK_NAME) {
             case BACKPACK:
                 return new BackpackFitnessFunction(backpackConditionData);
             case SALESMAN:
@@ -92,7 +90,7 @@ public class EvolutionaryAlgorithm {
     }
 
     private ChromosomeController getChromosomeController() {
-        switch (Config.algorithmType) {
+        switch (Config.TASK_NAME) {
             case BACKPACK:
                 return new BackpackChromosomeController();
             case SALESMAN:
@@ -103,7 +101,7 @@ public class EvolutionaryAlgorithm {
     }
 
     private void initSelection(Random random) {
-        switch (Config.selectionType) {
+        switch (Config.SELECTION_TYPE) {
             case HALF_POPULATION:
                 selection = new HalfPopulationSelection();
                 break;
@@ -117,7 +115,7 @@ public class EvolutionaryAlgorithm {
     }
 
     private void initCrossover(ChromosomeController chromosomeController, Random random) {
-        switch (Config.crossoverType) {
+        switch (Config.CROSSOVER_TYPE) {
             case FAIR_POINT:
                 crossover = new FairPointCrossover(chromosomeController);
                 break;
@@ -128,7 +126,7 @@ public class EvolutionaryAlgorithm {
     }
 
     private void initMutation(FitnessFunction fitnessFunction, Random random) {
-        switch (Config.mutationType) {
+        switch (Config.MUTATION_TYPE) {
             case SWAP_GENES:
                 mutation = new SwapGenesMutation(fitnessFunction, random);
                 break;
@@ -139,13 +137,13 @@ public class EvolutionaryAlgorithm {
     }
 
     private void initGenerationReplacement() {
-        if (Config.generationReplacementType == GenerationReplacementType.All_OFFSPRING_INTO_POPULATION) {
+        if (Config.GENERATION_REPLACEMENT_TYPE == GenerationReplacementType.All_OFFSPRING_INTO_POPULATION) {
             generationReplacement = new AllOffspringIntoPopulationGenerationReplacement();
         }
     }
 
     private void sortPopulationBasedOnTaskType(Population population) {
-        switch (Config.taskType) {
+        switch (Config.TASK_TYPE) {
             case MAXIMIZATION:
                 population.getIndividuals().sort(Comparator.comparingInt(Individual::getFitness));
                 break;
@@ -155,25 +153,25 @@ public class EvolutionaryAlgorithm {
         }
     }
 
-    private void changeBestIndividualBasedOnTaskTypeIfPossible(Population population) {
+    private void changeBestIndividualBasedOnTaskTypeIfPossible(Population population, RuntimeInfo info) {
         Individual bestInPopulation = population.getIndividuals().get(population.getIndividuals().size() - 1);
 
-        switch (Config.taskType) {
+        switch (Config.TASK_TYPE) {
             case MAXIMIZATION:
-                changeBestIndividualIfPossible(bestInPopulation, (ind) -> ind.getFitness() > bestIndividual.getFitness());
+                changeBestIndividualIfPossible(info, bestInPopulation, (ind) -> ind.getFitness() > info.getBestIndividual().getFitness());
                 break;
             case MINIMIZATION:
-                changeBestIndividualIfPossible(bestInPopulation, (ind) -> ind.getFitness() < bestIndividual.getFitness());
+                changeBestIndividualIfPossible(info, bestInPopulation, (ind) -> ind.getFitness() < info.getBestIndividual().getFitness());
                 break;
         }
     }
 
-    private void changeBestIndividualIfPossible(Individual individual, Predicate<Individual> predicate) {
-        if (bestIndividual == null || predicate.test(individual)) {
-            bestIndividual = individual;
-            bestIndividualNotChangeCounter = 0;
+    private void changeBestIndividualIfPossible(RuntimeInfo info, Individual individual, Predicate<Individual> predicate) {
+        if (info.getBestIndividual() == null || predicate.test(individual)) {
+            info.setBestIndividual(individual);
+            info.setBestIndividualNotChangeCounter(0);
         } else {
-            bestIndividualNotChangeCounter++;
+            info.setBestIndividualNotChangeCounter(info.getBestIndividualNotChangeCounter() + 1);
         }
     }
 

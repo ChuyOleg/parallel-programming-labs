@@ -34,11 +34,13 @@ public class Main {
 
         Result result = warmUpMachine();
 
-        BigDecimal averageTime = testPerformance();
+        if (Config.TEST_PERFORMANCE_ITERATION_NUM > 0) {
+            BigDecimal averageTime = testPerformance();
+            System.out.println("Average execution time for " + Config.TEST_PERFORMANCE_ITERATION_NUM + " iteration: " + (averageTime) +  " ms" );
+        }
 
         System.out.println("Best fitness: " + result.getBestIndividual().getFitness());
         System.out.println("Generation: " + result.getGeneration());
-        System.out.println("Average execution time for " + Config.TEST_PERFORMANCE_ITERATION_NUM + " iteration: " + (averageTime) +  " ms" );
     }
 
     private static Result warmUpMachine() throws ExecutionException, InterruptedException {

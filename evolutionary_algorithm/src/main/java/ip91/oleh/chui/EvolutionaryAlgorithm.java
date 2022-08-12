@@ -57,9 +57,9 @@ public class EvolutionaryAlgorithm {
 
     public Result run(Population population, RuntimeInfo info) {
         sortPopulationBasedOnTaskType(population);
-        int generationCounter;
+        int generationCounter = 0;
 
-        for (generationCounter = 0; generationCounter < Config.MAX_GENERATION_NUMBER; generationCounter++) {
+        while (generationCounter < Config.MAX_GENERATION_NUMBER && info.getBestIndividualNotChangeCounter() < Config.GENERATION_WITHOUT_CHANGING_LIMIT) {
             List<Individual> bestParents = selection.process(population);
 
             List<Individual> offspring = crossover.process(bestParents);
@@ -72,7 +72,7 @@ public class EvolutionaryAlgorithm {
 
             changeBestIndividualBasedOnTaskTypeIfPossible(population, info);
 
-            if (info.getBestIndividualNotChangeCounter() == Config.GENERATION_WITHOUT_CHANGING_LIMIT) break;
+            generationCounter++;
         }
 
         return new Result(info.getBestIndividual(), generationCounter);

@@ -8,7 +8,7 @@ public class Config {
     public static final TaskName TASK_NAME = TaskName.BACKPACK;
     // MAXIMIZATION vs MINIMIZATION
     public static final TaskType TASK_TYPE = TaskType.MAXIMIZATION;
-    public static final int TEST_PERFORMANCE_ITERATION_NUM = 10;
+    public static final int TEST_PERFORMANCE_ITERATION_NUM = 2;
 
     // RANDOM vs FROM_FILE
     public static final ConditionDataType CONDITION_DATA_TYPE = ConditionDataType.RANDOM;
@@ -29,9 +29,9 @@ public class Config {
     public static final GenerationReplacementType GENERATION_REPLACEMENT_TYPE = GenerationReplacementType.All_OFFSPRING_INTO_POPULATION;
 
     public static final int MAX_GENERATION_NUMBER = 5000;
-    public static final int GENERATION_WITHOUT_CHANGING_LIMIT = 5000;
+    public static final int GENERATION_WITHOUT_CHANGING_LIMIT = 750;
 
-    public static final int POPULATION_SIZE = 500;
+    public static final int POPULATION_SIZE = 100;
     // IF MUTATION_MEASURE = 100, MUTATION_PERCENTAGE = 1 then chance for mutation = 1/100;
     public static final int MUTATION_MEASURE = 1000;
     public static final int MUTATION_PERCENTAGE = 1;

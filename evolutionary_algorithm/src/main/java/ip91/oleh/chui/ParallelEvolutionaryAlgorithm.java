@@ -21,11 +21,10 @@ public class ParallelEvolutionaryAlgorithm {
 
     private final Population population;
 
-    public void process() throws InterruptedException, ExecutionException {
+    public Result process() throws InterruptedException, ExecutionException {
         EvolutionaryAlgorithm evolutionaryAlgorithm = new EvolutionaryAlgorithm(backpackConditionData, salesmanConditionData);
         evolutionaryAlgorithm.init();
 
-        long startTime = System.currentTimeMillis();
         ExecutorService executorService = Executors.newFixedThreadPool(Config.CORE_CPU_NUMBER);
 
         List<Callable<Result>> tasks = createTasks(evolutionaryAlgorithm);
@@ -35,11 +34,7 @@ public class ParallelEvolutionaryAlgorithm {
 
         executorService.shutdown();
 
-        long finishTime = System.currentTimeMillis();
-
-        System.out.println("Best fitness: " + result.getBestIndividual().getFitness());
-        System.out.println("Generation: " + result.getGeneration());
-        System.out.println("Execution time: " + (finishTime - startTime) + " ms");
+        return result;
     }
 
     private List<Callable<Result>> createTasks(EvolutionaryAlgorithm algorithm) {

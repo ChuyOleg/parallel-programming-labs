@@ -25,7 +25,7 @@ public class ParallelEvolutionaryAlgorithm {
         EvolutionaryAlgorithm evolutionaryAlgorithm = new EvolutionaryAlgorithm(backpackConditionData, salesmanConditionData);
         evolutionaryAlgorithm.init();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(Config.CORE_CPU_NUMBER);
+        ExecutorService executorService = Executors.newFixedThreadPool(Config.THREAD_NUMBER);
 
         List<Callable<Result>> tasks = createTasks(evolutionaryAlgorithm);
         List<Future<Result>> futureList = executorService.invokeAll(tasks);
@@ -40,7 +40,7 @@ public class ParallelEvolutionaryAlgorithm {
     private List<Callable<Result>> createTasks(EvolutionaryAlgorithm algorithm) {
         List<Callable<Result>> tasks = new ArrayList<>();
 
-        for (int i = 0; i < Config.CORE_CPU_NUMBER; i++) {
+        for (int i = 0; i < Config.THREAD_NUMBER; i++) {
             final int finalI = i;
             tasks.add(() -> algorithm.run(getPartOfPopulation(population, finalI), new RuntimeInfo(null, 0)));
         }
@@ -51,13 +51,13 @@ public class ParallelEvolutionaryAlgorithm {
     private Population getPartOfPopulation(Population population, int num) {
         List<Individual> individuals = new ArrayList<>();
 
-        int quantity = population.getIndividuals().size() / Config.CORE_CPU_NUMBER;
+        int quantity = population.getIndividuals().size() / Config.THREAD_NUMBER;
 
         for (int index = num * quantity; index < (num + 1) * quantity; index++) {
             individuals.add(population.getIndividuals().get(index));
         }
 
-        if (num == Config.CORE_CPU_NUMBER - 1) {
+        if (num == Config.THREAD_NUMBER - 1) {
             for (int index = (num + 1) * quantity; index < population.getIndividuals().size(); index++) {
                 individuals.add(population.getIndividuals().get(index));
             }

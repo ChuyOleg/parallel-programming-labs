@@ -136,7 +136,7 @@ public class Main {
     }
 
     private static void printAlgorithmInfo() {
-        final String algorithmType = (Config.ALGORITHM_TYPE.equals(AlgorithmType.SEQUENCE)) ? "Sequence" : "Parallel CPU_CORE = " + Config.CORE_CPU_NUMBER;
+        final String algorithmType = (Config.ALGORITHM_TYPE.equals(AlgorithmType.SEQUENCE)) ? "Sequence" : "Parallel Thread_Number = " + Config.THREAD_NUMBER;
         final String thingName = (Config.TASK_NAME.equals(TaskName.SALESMAN)) ? "cities" : "things";
         final int thingCount = (Config.TASK_NAME.equals(TaskName.SALESMAN)) ? salesmanConditionData.getRoadMatrix().length : backpackConditionData.getWeightTable().length;
 
